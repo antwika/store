@@ -1,13 +1,30 @@
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongoDbStore } from '../src/MongoDbStore';
 
 describe('HttpRoute', () => {
+  let mockMongoDb: MongoMemoryServer;
+  let connectionUri: string;
   let store: MongoDbStore;
 
+  beforeAll(async () => {
+    mockMongoDb = await MongoMemoryServer.create();
+    connectionUri = mockMongoDb.getUri();
+  });
+
+  afterAll(async () => {
+    await mockMongoDb.stop();
+  });
+
   beforeEach(() => {
+    const match = connectionUri.match(/:\/\/(127.0.0.1(?::\d+)*)\//);
+    if (!match) throw new Error('Failed to extract "cluster" from mongodb uri');
+
+    const cluster = match[1];
+
     store = new MongoDbStore({
       username: undefined,
       password: undefined,
-      cluster: 'localhost:27017',
+      cluster,
       database: 'auth-api',
       collection: 'clients',
     });

@@ -42,7 +42,8 @@
   },
   "dependencies": {
     "@antwika/common": "0.0.7",
-    "mongodb": "^4.6.0"
+    "mongodb": "^4.6.0",
+    "mongodb-memory-server": "^8.6.0"
   },
   "files": [
     "bin",
