@@ -47,7 +47,7 @@ export class MongoDbStore implements IStore {
     }
   }
 
-  async create<T>(data: T) {
+  async create<T extends Data>(data: T) {
     const connection = await this.getConnection();
     const database = connection.db(this.database);
     const collection = database.collection(this.collection);
@@ -55,7 +55,7 @@ export class MongoDbStore implements IStore {
     return data;
   }
 
-  async read<T>(id: DataId): Promise<T> {
+  async read<T extends Data>(id: DataId): Promise<T> {
     const connection = await this.getConnection();
     const database = connection.db(this.database);
     const collection = database.collection(this.collection);
@@ -66,7 +66,7 @@ export class MongoDbStore implements IStore {
     return found as unknown as T;
   }
 
-  async readAll<T>(): Promise<T[]> {
+  async readAll<T extends Data>(): Promise<T[]> {
     const connection = await this.getConnection();
     const database = connection.db(this.database);
     const collection = database.collection(this.collection);
