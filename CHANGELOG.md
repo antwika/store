@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/antwika/store/compare/v0.0.2...v0.0.3) (2022-06-05)
+
+
+### Features
+
+* MemoryStore ([f9c4a44](https://github.com/antwika/store/commit/f9c4a44cb6d08ebf183739812f0e24eaafe53fc9))
+
 ### [0.0.2](https://github.com/antwika/store/compare/v0.0.1...v0.0.2) (2022-06-05)
 
 
