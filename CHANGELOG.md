@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/antwika/store/compare/v0.0.3...v0.0.4) (2022-06-05)
+
+
+### Bug Fixes
+
+* export MemoryStore ([ff3be19](https://github.com/antwika/store/commit/ff3be19eb76a0508c0960ebbc67990faab0137e4))
+
 ### [0.0.3](https://github.com/antwika/store/compare/v0.0.2...v0.0.3) (2022-06-05)
 
 
