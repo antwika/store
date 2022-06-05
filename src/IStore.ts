@@ -5,6 +5,7 @@ export type Data = {
 };
 
 export interface IStore {
+  connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   get: (id: DataId) => Promise<any>;
   write: (data: Data) => Promise<any>;

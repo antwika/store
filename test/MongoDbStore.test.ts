@@ -30,6 +30,10 @@ describe('HttpRoute', () => {
     });
   });
 
+  beforeEach(async () => {
+    await store.connect();
+  });
+
   afterEach(async () => {
     jest.resetAllMocks();
     await store.disconnect();

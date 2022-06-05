@@ -37,6 +37,10 @@ export class MongoDbStore implements IStore {
     return this.connection;
   }
 
+  async connect() {
+    await this.getConnection();
+  }
+
   async disconnect() {
     const connection = await this.getConnection();
     if (connection) {
