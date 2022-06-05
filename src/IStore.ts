@@ -7,7 +7,9 @@ export type Data = {
 export interface IStore {
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
-  get: (id: DataId) => Promise<any>;
-  write: (data: Data) => Promise<any>;
-  delete: (id: DataId) => Promise<any>;
+  create: <T extends Data>(data: T) => Promise<T>;
+  read: <T extends Data>(id: DataId) => Promise<T>;
+  readAll: <T extends Data>() => Promise<T[]>;
+  update: <T extends Data>(data: T) => Promise<void>;
+  delete: (id: DataId) => Promise<void>;
 }

@@ -1,4 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Data } from '../src/IStore';
 import { MongoDbStore } from '../src/MongoDbStore';
 
 describe('HttpRoute', () => {
@@ -40,19 +41,49 @@ describe('HttpRoute', () => {
   });
 
   it('throws when trying to get a non-existant data id', async () => {
-    await expect(store.get('null')).rejects.toThrow('Could not find data by id');
+    await expect(store.read('null')).rejects.toThrow('Could not find data by id');
   });
 
   it('throws when trying to delete a non-existant data id', async () => {
     await expect(store.delete('null')).rejects.toThrow('Could not delete non-existant data');
   });
 
-  it('can write, get and delete data from store', async () => {
-    const testData = { id: 'abc' };
-    const written = await store.write(testData);
-    const gotData = await store.get(written.id);
-    const deleted = await store.delete(gotData.id);
+  it('can write, read, update and delete documents from the store', async () => {
+    type TestData = Data & {
+      name: string;
+    };
 
-    expect(deleted).toBe(true);
+    const w1 = await store.create<TestData>({ id: 'item1', name: 'My item 1' });
+    const w2 = await store.create<TestData>({ id: 'item2', name: 'My item 2' });
+    expect(w1.id).toBe('item1');
+    expect(w2.id).toBe('item2');
+    expect(w1.name).toBe('My item 1');
+    expect(w2.name).toBe('My item 2');
+
+    const readAll1 = await store.readAll<TestData>();
+    expect(readAll1).toHaveLength(2);
+
+    const r1 = await store.read<TestData>(w1.id);
+    const r2 = await store.read<TestData>(w2.id);
+    expect(r1.id).toBe('item1');
+    expect(r2.id).toBe('item2');
+
+    r1.name = 'My updated item 1';
+    r2.name = 'My updated item 2';
+    await store.update<TestData>(r1);
+    await store.update<TestData>(r2);
+    const u1 = await store.read<TestData>(r1.id);
+    const u2 = await store.read<TestData>(r2.id);
+    expect(u1.name).toBe('My updated item 1');
+    expect(u2.name).toBe('My updated item 2');
+
+    const readAll2 = await store.readAll<TestData>();
+    expect(readAll2).toHaveLength(2);
+
+    await store.delete(r1.id);
+    await store.delete(r2.id);
+
+    const readAll3 = await store.readAll<TestData>();
+    expect(readAll3).toHaveLength(0);
   });
 });

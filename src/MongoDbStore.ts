@@ -10,8 +10,6 @@ interface MongoDbStoreArgs {
 }
 
 export class MongoDbStore implements IStore {
-  private db: Record<DataId, Data>;
-
   private database: string;
 
   private collection: string;
@@ -21,7 +19,6 @@ export class MongoDbStore implements IStore {
   private connection: MongoClient | undefined;
 
   constructor(args: MongoDbStoreArgs) {
-    this.db = {};
     this.database = args.database;
     this.collection = args.collection;
     this.connectionUri = `mongodb://${args.cluster}/${args.database}?retryWrites=true&w=majority`;
@@ -50,7 +47,15 @@ export class MongoDbStore implements IStore {
     }
   }
 
-  async get(id: DataId) {
+  async create<T>(data: T) {
+    const connection = await this.getConnection();
+    const database = connection.db(this.database);
+    const collection = database.collection(this.collection);
+    await collection.insertOne(data);
+    return data;
+  }
+
+  async read<T>(id: DataId): Promise<T> {
     const connection = await this.getConnection();
     const database = connection.db(this.database);
     const collection = database.collection(this.collection);
@@ -58,15 +63,22 @@ export class MongoDbStore implements IStore {
     if (!found) {
       throw new Error('Could not find data by id');
     }
-    return found;
+    return found as unknown as T;
   }
 
-  async write(data: Data) {
+  async readAll<T>(): Promise<T[]> {
     const connection = await this.getConnection();
     const database = connection.db(this.database);
     const collection = database.collection(this.collection);
-    await collection.insertOne(data);
-    return data;
+    const found = await collection.find({}).toArray();
+    return found as unknown as T[];
+  }
+
+  async update<T extends Data>(data: T) {
+    const connection = await this.getConnection();
+    const database = connection.db(this.database);
+    const collection = database.collection(this.collection);
+    await collection.updateOne({ id: data.id }, { $set: data });
   }
 
   async delete(id: DataId) {
@@ -78,7 +90,5 @@ export class MongoDbStore implements IStore {
     if (deleted.deletedCount === 0) {
       throw new Error('Could not delete non-existant data');
     }
-
-    return true;
   }
 }
