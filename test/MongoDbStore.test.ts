@@ -8,7 +8,21 @@ describe('MongoDbStore', () => {
   let store: MongoDbStore;
 
   beforeAll(async () => {
-    mockMongoDb = await MongoMemoryServer.create();
+    mockMongoDb = await MongoMemoryServer.create({
+      instance: {
+        dbName: 'testdb',
+      },
+      auth: {
+        extraUsers: [
+          {
+            createUser: 'testuser',
+            pwd: 'testpass',
+            roles: [],
+            database: 'testdb',
+          },
+        ],
+      },
+    });
     connectionUri = mockMongoDb.getUri();
   });
 
@@ -23,11 +37,13 @@ describe('MongoDbStore', () => {
     const cluster = match[1];
 
     store = new MongoDbStore({
-      username: undefined,
-      password: undefined,
+      protocol: 'mongodb',
+      username: 'testuser',
+      password: 'testpass',
       cluster,
-      database: 'auth-api',
-      collection: 'clients',
+      database: 'testdb',
+      collection: 'testcollection',
+      flags: 'retryWrites=true&w=majority',
     });
 
     await store.connect();

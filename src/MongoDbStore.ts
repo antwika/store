@@ -2,26 +2,46 @@ import { MongoClient } from 'mongodb';
 import { Data, DataId, IStore } from './IStore';
 
 interface MongoDbStoreArgs {
-  username: string | undefined,
-  password: string | undefined,
+  protocol: string,
+  username?: string,
+  password?: string,
   cluster: string,
   database: string,
   collection: string,
+  flags?: string,
 }
 
 export class MongoDbStore implements IStore {
+  private cluster: string;
+
   private database: string;
 
   private collection: string;
 
   private connectionUri: string;
 
-  private connection: MongoClient | undefined;
+  private connection?: MongoClient;
 
   constructor(args: MongoDbStoreArgs) {
+    const {
+      protocol,
+      username,
+      password,
+      cluster,
+      database,
+      flags,
+    } = args;
+
+    this.cluster = cluster;
     this.database = args.database;
     this.collection = args.collection;
-    this.connectionUri = `mongodb://${args.cluster}/${args.database}?retryWrites=true&w=majority`;
+
+    let connectionUri = `${protocol}://`;
+    if (username && password) connectionUri += `${username}:${password}@`;
+    connectionUri += `${cluster}/${database}`;
+    if (flags) connectionUri += `?${flags}`;
+
+    this.connectionUri = connectionUri;
   }
 
   async getConnection() {
@@ -29,7 +49,7 @@ export class MongoDbStore implements IStore {
       const connection = new MongoClient(this.connectionUri);
       await connection.connect();
       this.connection = connection;
-      console.log('Connected to MongoDb database');
+      console.log(`Connected to MongoDb database [${this.cluster}/${this.database}]`);
     }
     return this.connection;
   }
@@ -43,7 +63,7 @@ export class MongoDbStore implements IStore {
     if (connection) {
       await connection.close();
       this.connection = undefined;
-      console.log('Disconnected from MongoDb database');
+      console.log(`Disconnected from MongoDb database [${this.cluster}/${this.database}]`);
     }
   }
 
