@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/antwika/store/compare/v0.0.4...v0.2.0) (2022-06-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* protocol must now be specified when instantiating a MongoDbStore
+
+### Features
+
+* protocol must now be specified when instantiating a MongoDbStore ([f22e5c4](https://github.com/antwika/store/commit/f22e5c43a3671811431aa7cd72d44661cfb30d4e))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @antwika/common to v0.0.11 ([67d0f71](https://github.com/antwika/store/commit/67d0f71b7740f6df4abefc07860839643f1385a6))
+
 ## [0.1.0](https://github.com/antwika/store/compare/v0.0.4...v0.1.0) (2022-06-06)
 
 
