@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@antwika/common@0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.13.tgz#354d5f6f7306ffd4fddda39f04b0219307d119e1"
-  integrity sha512-5h5uFAwj6lp0TPMMFYVqN/laDfKqg9zpskxJt+R9ryPz3acbk5h6ruSPwUDs3kM1xJJMQvHF4B2PQxtvCDy5aw==
+"@antwika/common@0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.16.tgz#9d074be45ac9b91f939f99f4de36b76fe3df3af5"
+  integrity sha512-/QZk16/IEzo7zVqPV0VlTPTEHygLGG8vbGOKbWOGWkj8p0pdUFyha4s4LDvKdaG8jgQ3LRrA9Wsfv9JZGyrFPQ==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.7":
   version "7.16.7"
