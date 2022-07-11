@@ -1,116 +1,29 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { DataId, IStore, WithId } from './IStore';
+import { MongoDbConnection, MongoDbConnectionArgs } from './MongoDbConnection';
 
-/**
- * Constructor arguments
- */
-export interface MongoDbStoreArgs {
-  /**
-   * A required prefix to identify that this is a string in the standard connection format.
-   * @example `mongodb://`
-   */
-  protocol: string,
-
-  /**
-   * Authorization credential username
-   * @example `testuser`
-   */
-  username?: string,
-
-  /**
-   * Authorization credential username
-   * @example `testpass`
-   */
-  password?: string,
-
-  /**
-   * The host (and optional port number) where the mongod instance is running.
-   * @example `host[:port]`
-   */
-  cluster: string,
-
-  /**
-   * The specific Mongodb database name to connect to.
-   * @example `testdb`
-   */
-  database: string,
-
+export interface MongoDbStoreArgs extends MongoDbConnectionArgs {
   /**
    * The specific MongoDB collection to connect to.
    * @example `testcollection`
    */
-  collection: string,
-
-  /**
-   * A query string that specifies connection specific options..
-   * @see [Connection String Options](https://www.mongodb.com/docs/manual/reference/connection-string/#std-label-connections-connection-options)
-   * @example `replicaSet=mySet&authSource=authDB`
-   */
-  flags?: string,
+   collection: string,
 }
 
-export class MongoDbStore implements IStore {
-  private cluster: string;
-
-  private database: string;
-
+export class MongoDbStore extends MongoDbConnection implements IStore {
   private collection: string;
 
-  private connectionUri: string;
-
-  private connection?: MongoClient;
-
   constructor(args: MongoDbStoreArgs) {
-    const {
-      protocol,
-      username,
-      password,
-      cluster,
-      database,
-      flags,
-    } = args;
+    super(args);
 
-    this.cluster = cluster;
-    this.database = args.database;
     this.collection = args.collection;
-
-    let connectionUri = `${protocol}://`;
-    if (username && password) connectionUri += `${username}:${password}@`;
-    connectionUri += `${cluster}/${database}`;
-    if (flags) connectionUri += `?${flags}`;
-
-    this.connectionUri = connectionUri;
-  }
-
-  async getConnection() {
-    if (!this.connection) {
-      const connection = new MongoClient(this.connectionUri);
-      await connection.connect();
-      this.connection = connection;
-      console.log(`Connected to MongoDb database [${this.cluster}/${this.database}]`);
-    }
-    return this.connection;
-  }
-
-  async connect() {
-    await this.getConnection();
-  }
-
-  async disconnect() {
-    const connection = await this.getConnection();
-    if (connection) {
-      await connection.close();
-      this.connection = undefined;
-      console.log(`Disconnected from MongoDb database [${this.cluster}/${this.database}]`);
-    }
   }
 
   /**
    * @deprecated use {@link createWithoutId} instead.
    */
   async create<T>(data: WithId<T>) {
-    const connection = await this.getConnection();
-    const database = connection.db(this.database);
+    const database = await this.getDatabase();
     const collection = database.collection(this.collection);
 
     const doc = { ...data, _id: new ObjectId(this.ensureHex(data.id, 24)) };
@@ -121,8 +34,7 @@ export class MongoDbStore implements IStore {
   }
 
   async createWithoutId<T>(data: T): Promise<WithId<T>> {
-    const connection = await this.getConnection();
-    const database = connection.db(this.database);
+    const database = await this.getDatabase();
     const collection = database.collection(this.collection);
 
     const doc = { ...data, _id: new ObjectId() };
@@ -134,8 +46,7 @@ export class MongoDbStore implements IStore {
   }
 
   async read<T>(id: DataId): Promise<WithId<T>> {
-    const connection = await this.getConnection();
-    const database = connection.db(this.database);
+    const database = await this.getDatabase();
     const collection = database.collection(this.collection);
     const found = await collection.findOne({ _id: new ObjectId(this.ensureHex(id, 24)) });
     if (!found) {
@@ -149,8 +60,7 @@ export class MongoDbStore implements IStore {
   }
 
   async readAll<T>(): Promise<WithId<T>[]> {
-    const connection = await this.getConnection();
-    const database = connection.db(this.database);
+    const database = await this.getDatabase();
     const collection = database.collection(this.collection);
     const found = await collection.find({}).toArray();
     const data = found.map((f) => {
@@ -164,16 +74,14 @@ export class MongoDbStore implements IStore {
   }
 
   async update<T>(data: WithId<T>) {
-    const connection = await this.getConnection();
-    const database = connection.db(this.database);
+    const database = await this.getDatabase();
     const collection = database.collection(this.collection);
     const doc = { ...data, _id: new ObjectId(this.ensureHex(data.id, 24)) };
     await collection.updateOne({ _id: new ObjectId(this.ensureHex(data.id, 24)) }, { $set: doc });
   }
 
   async delete(id: DataId) {
-    const connection = await this.getConnection();
-    const database = connection.db(this.database);
+    const database = await this.getDatabase();
     const collection = database.collection(this.collection);
     const deleted = await collection.deleteOne({ _id: new ObjectId(this.ensureHex(id, 24)) });
 
