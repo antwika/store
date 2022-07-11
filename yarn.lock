@@ -10,15 +10,15 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@antwika/common@0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.16.tgz#9d074be45ac9b91f939f99f4de36b76fe3df3af5"
-  integrity sha512-/QZk16/IEzo7zVqPV0VlTPTEHygLGG8vbGOKbWOGWkj8p0pdUFyha4s4LDvKdaG8jgQ3LRrA9Wsfv9JZGyrFPQ==
+"@antwika/common@0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.17.tgz#ea31078d02645b4eace25f8ba62f4aeeefe73447"
+  integrity sha512-Mu8ycjgOLiktzwtvI1hfblleS2I2h9ZRHEnwdv83mg4CmNmA6Rh7TVqQdxzBh6YTOTuo5QkqFv8dt+elAqH8HQ==
 
-"@antwika/standard-version@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@antwika/standard-version/-/standard-version-0.1.2.tgz#3f4b0e1dbbe47da4bcd27c2b2f0b6f51eca5bb73"
-  integrity sha512-1n7Iqq4dhgdbgDLwSw2ul32T5MAyevYQDFWTR9zh0EI9ENuAnritXbgq5XmanN8k9MyJATJgKvGlC9Nz//d4Lg==
+"@antwika/standard-version@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@antwika/standard-version/-/standard-version-0.1.3.tgz#c901c296c1a63c55604f054df9150ac929989572"
+  integrity sha512-Fw3M34TAyTr+e5jPw+39AYmieXOlzAS88Hjr6sWgeoq+K4D9eP5o9ImuzidFrVkD69FjLca9GmkJRR9KZGgfEw==
   dependencies:
     conventional-changelog "3.1.25"
     conventional-changelog-config-spec "2.1.0"
@@ -2222,10 +2222,10 @@ eslint-import-resolver-node@^0.3.6:
     debug "^3.2.7"
     resolve "^1.20.0"
 
-eslint-import-resolver-typescript@3.2.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.2.4.tgz#74e930272de0ed84489f6a139d2c0db80bf7c8cf"
-  integrity sha512-XmB2RZq534N3cZajuyMb8c2TJCkCHtU7gUHZg2iJaULIgfIclfQoih08C4/4RmdKZgymAkfHTo4sdmljC6/5qA==
+eslint-import-resolver-typescript@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.2.5.tgz#cec82e42d93f61a039672e2ba7dc3e3663c86219"
+  integrity sha512-yEBi/EWxFFMjcZTBxrgdu5cFAXB2atOhYDhp0P0yHqjZa5YiPNqQVt4/lNNVWwW7Kf8IIZmyeBboWOgsfffe7w==
   dependencies:
     debug "^4.3.4"
     enhanced-resolve "^5.10.0"
@@ -5149,10 +5149,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typedoc@0.23.5:
-  version "0.23.5"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.5.tgz#a28a3eeca739b6ae9ca6081f429bfe52dc28423b"
-  integrity sha512-5ydWUOe4E9Z3a/r33cC5X5CJPLnFDKIondHYtdnEnO0sa/s8f+Nrfe+LBGOk/UTkV2IPYyL1Gm1PtUKIihklyw==
+typedoc@0.23.7:
+  version "0.23.7"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.7.tgz#e47a48801d6b9d0d6f787424fa63ed600c670387"
+  integrity sha512-Vl/Yh4KYBaxQQOYImBgLQDX61hfaA7XaP/DZVd/w7rQvaqLEsdQH6gEMK8CMjyHo0bSzVnNYwxtD1KPSENoWug==
   dependencies:
     lunr "^2.3.9"
     marked "^4.0.16"
