@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 import { IPartitionStore, Partition } from './IPartitionStore';
 import { DataId, WithId } from './IStore';
 import { MongoDbConnection, MongoDbConnectionArgs } from './MongoDbConnection';
+import { ensureHex } from './util';
 
 export interface MongoDbPartitionStoreArgs extends MongoDbConnectionArgs {}
 
@@ -21,9 +22,9 @@ export class MongoDbPartitionStore extends MongoDbConnection implements IPartiti
   async read<T>(partition: Partition, id: DataId): Promise<WithId<T>> {
     const database = await this.getDatabase();
     const collection = database.collection(partition.name);
-    const found = await collection.findOne({ _id: new ObjectId(this.ensureHex(id, 24)) });
+    const found = await collection.findOne({ _id: new ObjectId(ensureHex(id, 24)) });
     if (!found) {
-      throw new Error(`Could not find data by id: ${this.ensureHex(id, 24)}`);
+      throw new Error(`Could not find data by id: ${ensureHex(id, 24)}`);
     }
     // eslint-disable-next-line no-underscore-dangle
     const data: any = { ...found, id: found._id.toHexString() };
@@ -49,32 +50,17 @@ export class MongoDbPartitionStore extends MongoDbConnection implements IPartiti
   async update<T>(partition: Partition, data: WithId<T>) {
     const database = await this.getDatabase();
     const collection = database.collection(partition.name);
-    const doc = { ...data, _id: new ObjectId(this.ensureHex(data.id, 24)) };
-    await collection.updateOne({ _id: new ObjectId(this.ensureHex(data.id, 24)) }, { $set: doc });
+    const doc = { ...data, _id: new ObjectId(ensureHex(data.id, 24)) };
+    await collection.updateOne({ _id: new ObjectId(ensureHex(data.id, 24)) }, { $set: doc });
   }
 
   async delete(partition: Partition, id: DataId) {
     const database = await this.getDatabase();
     const collection = database.collection(partition.name);
-    const deleted = await collection.deleteOne({ _id: new ObjectId(this.ensureHex(id, 24)) });
+    const deleted = await collection.deleteOne({ _id: new ObjectId(ensureHex(id, 24)) });
 
     if (deleted.deletedCount === 0) {
       throw new Error('Could not delete non-existant data');
     }
-  }
-
-  /**
-   * @deprecated
-   */
-  private ensureHex(str: string, length: number) {
-    if (!/^[0-9a-fA-F]+$/.test(str) || str.length !== 24) {
-      let result = '';
-      for (let i = 0; i < str.length; i += 1) {
-        result += str.charCodeAt(i).toString(16);
-      }
-      result = result.padStart(length, '0');
-      return result.substring(result.length - length);
-    }
-    return str;
   }
 }
