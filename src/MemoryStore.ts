@@ -50,11 +50,15 @@ export class MemoryStore implements IStore {
   }
 
   async update<T>(data: WithId<T>) {
-    this.database[data.id] = data;
+    this.database[data.id] = { ...this.database[data.id], ...data };
   }
 
   async delete(id: DataId) {
     if (!this.database[id]) throw new Error('Could not delete non-existant data');
     delete this.database[id];
+  }
+
+  async replace<T>(data: WithId<T>) {
+    this.database[data.id] = data;
   }
 }
