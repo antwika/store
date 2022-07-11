@@ -1,7 +1,11 @@
-import { Data, DataId, IStore } from './IStore';
+import { randomFill } from 'crypto';
+import { promisify } from 'util';
+import { DataId, IStore, WithId } from './IStore';
+
+const randomFillPromise = promisify<Buffer, Buffer>(randomFill);
 
 export class MemoryStore implements IStore {
-  private readonly database: Record<DataId, Data>;
+  private readonly database: Record<DataId, WithId<any>>;
 
   constructor() {
     this.database = {};
@@ -15,25 +19,37 @@ export class MemoryStore implements IStore {
     // NOP
   }
 
-  async create<T extends Data>(data: T) {
+  /**
+   * @deprecated use {@link createWithoutId} instead.
+   */
+  async create<T>(data: WithId<T>) {
     this.database[data.id] = data;
     return data;
   }
 
-  async read<T extends Data>(id: DataId): Promise<T> {
+  async createWithoutId<T>(data: T): Promise<WithId<T>> {
+    const buffer = Buffer.alloc(12);
+    const result = await randomFillPromise(buffer);
+    const id = result.toString('hex');
+    const save: WithId<T> = { ...data, id };
+    this.database[id] = save;
+    return { ...data, id };
+  }
+
+  async read<T>(id: DataId): Promise<WithId<T>> {
     const found = this.database[id];
     if (!found) {
       throw new Error('Could not find data by id');
     }
-    return found as unknown as T;
+    return found as unknown as WithId<T>;
   }
 
-  async readAll<T extends Data>(): Promise<T[]> {
+  async readAll<T>(): Promise<WithId<T>[]> {
     const found = Object.keys(this.database).map((key) => this.database[key]);
-    return found as unknown as T[];
+    return found as unknown as WithId<T>[];
   }
 
-  async update<T extends Data>(data: T) {
+  async update<T>(data: WithId<T>) {
     this.database[data.id] = data;
   }
 
