@@ -22,4 +22,5 @@ export interface IStore {
   readAll: <T>() => Promise<WithId<T>[]>;
   update: <T>(data: WithId<T>) => Promise<void>;
   delete: (id: DataId) => Promise<void>;
+  replace: <T>(data: WithId<T>) => Promise<void>;
 }

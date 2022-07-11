@@ -182,6 +182,17 @@ export class MongoDbStore implements IStore {
     }
   }
 
+  async replace<T>(data: WithId<T>) {
+    const connection = await this.getConnection();
+    const database = connection.db(this.database);
+    const collection = database.collection(this.collection);
+    await collection.replaceOne(
+      { _id: new ObjectId(this.ensureHex(data.id, 24)) },
+      { ...data, _id: new ObjectId(this.ensureHex(data.id, 24)) },
+      { upsert: false },
+    );
+  }
+
   /**
    * @deprecated
    */
