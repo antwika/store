@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/antwika/store/compare/v0.2.1...v0.3.0) (2022-07-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* MongoDbStore now internally maps to "_id"(ObjectId), the store also try to convert non-hex into hex with length 24.
+
+### Features
+
+* **deps:** use @antwika/standard-version ([66914a0](https://github.com/antwika/store/commit/66914a0049b8f18975d9439019d76e55e1f4c694))
+* MongoDbStore now internally maps to "_id"(ObjectId), the store also try to convert non-hex into hex with length 24. ([7de45d4](https://github.com/antwika/store/commit/7de45d4eff40c38c5f6ca5de39b1ae8d93d9a131))
+* new store type: IPartitionStore. ([52ddd6f](https://github.com/antwika/store/commit/52ddd6fcd32ad14435d6a259d22d8e9dd0ed27b9))
+* release every Tuesday at 12:15 UTC ([0c71acf](https://github.com/antwika/store/commit/0c71acf31046397dfb4d1f4ecf8dc2d6b3f4eff8))
+* script for typedoc generation ([0b8b425](https://github.com/antwika/store/commit/0b8b42541a4a0c47a7a8e79c531a9261870319db))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @antwika/common to v0.0.13 ([0993f2d](https://github.com/antwika/store/commit/0993f2d47fd667c0f4baca931e958962d1afce24))
+* **deps:** update dependency @antwika/common to v0.0.16 ([39c34fe](https://github.com/antwika/store/commit/39c34fe184f3d513d367d2dd85e5a767bab2e3a9))
+* **deps:** update dependency @antwika/common to v0.0.17 ([c239712](https://github.com/antwika/store/commit/c23971234778d1e46b9ec712aaad4f71701f7102))
+
 ### [0.2.1](https://github.com/antwika/store/compare/v0.2.0...v0.2.1) (2022-06-26)
 
 
