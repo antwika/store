@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.1](https://github.com/antwika/store/compare/v0.3.0...v0.3.1) (2022-07-12)
+
+
+### Bug Fixes
+
+* add missing MongoDbConnection type ([76ab928](https://github.com/antwika/store/commit/76ab928e431fa97649d320e3ff71629ad4bde02e))
+
 ## [0.3.0](https://github.com/antwika/store/compare/v0.2.1...v0.3.0) (2022-07-12)
 
 
