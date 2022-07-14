@@ -19,14 +19,6 @@ export class MemoryStore implements IStore {
     // NOP
   }
 
-  /**
-   * @deprecated use {@link createWithoutId} instead.
-   */
-  async create<T>(data: WithId<T>) {
-    this.database[data.id] = data;
-    return data;
-  }
-
   async createWithoutId<T>(data: T): Promise<WithId<T>> {
     const buffer = Buffer.alloc(12);
     const result = await randomFillPromise(buffer);

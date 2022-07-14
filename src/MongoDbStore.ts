@@ -1,7 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { DataId, IStore, WithId } from './IStore';
 import { MongoDbConnection, MongoDbConnectionArgs } from './MongoDbConnection';
-import { ensureHex } from './util';
 
 export interface MongoDbStoreArgs extends MongoDbConnectionArgs {
   /**
@@ -20,20 +19,6 @@ export class MongoDbStore extends MongoDbConnection implements IStore {
     this.collection = args.collection;
   }
 
-  /**
-   * @deprecated use {@link createWithoutId} instead.
-   */
-  async create<T>(data: WithId<T>) {
-    const database = await this.getDatabase();
-    const collection = database.collection(this.collection);
-
-    const doc = { ...data, _id: new ObjectId(ensureHex(data.id, 24)) };
-    await collection.insertOne(doc);
-    // eslint-disable-next-line no-underscore-dangle
-    const result: WithId<T> = { ...data, id: doc._id.toHexString() };
-    return result;
-  }
-
   async createWithoutId<T>(data: T): Promise<WithId<T>> {
     const database = await this.getDatabase();
     const collection = database.collection(this.collection);
@@ -49,9 +34,9 @@ export class MongoDbStore extends MongoDbConnection implements IStore {
   async read<T>(id: DataId): Promise<WithId<T>> {
     const database = await this.getDatabase();
     const collection = database.collection(this.collection);
-    const found = await collection.findOne({ _id: new ObjectId(ensureHex(id, 24)) });
+    const found = await collection.findOne({ _id: new ObjectId(id) });
     if (!found) {
-      throw new Error(`Could not find data by id: ${ensureHex(id, 24)}`);
+      throw new Error(`Could not find data by id: ${id}`);
     }
     // eslint-disable-next-line no-underscore-dangle
     const data: any = { ...found, id: found._id.toHexString() };
@@ -77,14 +62,14 @@ export class MongoDbStore extends MongoDbConnection implements IStore {
   async update<T>(data: WithId<T>) {
     const database = await this.getDatabase();
     const collection = database.collection(this.collection);
-    const doc = { ...data, _id: new ObjectId(ensureHex(data.id, 24)) };
-    await collection.updateOne({ _id: new ObjectId(ensureHex(data.id, 24)) }, { $set: doc });
+    const doc = { ...data, _id: new ObjectId(data.id) };
+    await collection.updateOne({ _id: new ObjectId(data.id) }, { $set: doc });
   }
 
   async delete(id: DataId) {
     const database = await this.getDatabase();
     const collection = database.collection(this.collection);
-    const deleted = await collection.deleteOne({ _id: new ObjectId(ensureHex(id, 24)) });
+    const deleted = await collection.deleteOne({ _id: new ObjectId(id) });
 
     if (deleted.deletedCount === 0) {
       throw new Error('Could not delete non-existant data');
