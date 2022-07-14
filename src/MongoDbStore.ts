@@ -20,20 +20,6 @@ export class MongoDbStore extends MongoDbConnection implements IStore {
     this.collection = args.collection;
   }
 
-  /**
-   * @deprecated use {@link createWithoutId} instead.
-   */
-  async create<T>(data: WithId<T>) {
-    const database = await this.getDatabase();
-    const collection = database.collection(this.collection);
-
-    const doc = { ...data, _id: new ObjectId(ensureHex(data.id, 24)) };
-    await collection.insertOne(doc);
-    // eslint-disable-next-line no-underscore-dangle
-    const result: WithId<T> = { ...data, id: doc._id.toHexString() };
-    return result;
-  }
-
   async createWithoutId<T>(data: T): Promise<WithId<T>> {
     const database = await this.getDatabase();
     const collection = database.collection(this.collection);
