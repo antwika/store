@@ -55,11 +55,11 @@ describe('MongoDbStore', () => {
   });
 
   it('throws when trying to get a non-existant data id', async () => {
-    await expect(store.read('null')).rejects.toThrow('Could not find data by id');
+    await expect(store.read('deadbeefdeadbeefdeadbeef')).rejects.toThrow('Could not find data by id');
   });
 
   it('throws when trying to delete a non-existant data id', async () => {
-    await expect(store.delete('null')).rejects.toThrow('Could not delete non-existant data');
+    await expect(store.delete('deadbeefdeadbeefdeadbeef')).rejects.toThrow('Could not delete non-existant data');
   });
 
   it('can write, read, update and delete documents from the store', async () => {
