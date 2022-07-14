@@ -1,13 +1,5 @@
 export type DataId = string;
 
-/**
- * @deprecated use {@link WithId} instead
- * @example `async fn<T extends Data>(data: T)` becomes `async fn<T>(data: WithId<T>)`
- */
-export type Data = {
-  id: DataId,
-};
-
 export type WithId<T> = T & { id: DataId };
 
 export interface IStore {
