@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/antwika/store/compare/v0.3.1...v0.4.0) (2022-07-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* removed deprecated utility function "ensureHex".
+* removed deprecated type "Data" from module "IStore".
+* removed deprecated function "create" from interface "IStore".
+
+### Features
+
+* removed deprecated function "create" from interface "IStore". ([2e005ec](https://github.com/antwika/store/commit/2e005ecee0ef221c8800d45fd733d14ecb85e78b))
+* removed deprecated type "Data" from module "IStore". ([1b031bb](https://github.com/antwika/store/commit/1b031bb3cf53dede3454a009bb29731c0e945c8b))
+* removed deprecated utility function "ensureHex". ([310fdf6](https://github.com/antwika/store/commit/310fdf6ab4f772c2770c1f5e9c636d049ff8abaa))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @antwika/common to v0.0.18 ([35ad312](https://github.com/antwika/store/commit/35ad3124d726d3bb1537e9d876f8ed8adf340c5e))
+
 ## [0.3.1](https://github.com/antwika/store/compare/v0.3.0...v0.3.1) (2022-07-12)
 
 
