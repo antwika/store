@@ -1,38 +1,11 @@
-import { ILogger } from '@antwika/common';
-import { Lock, TicketLock } from '@antwika/lock';
-import { DataId, IStore, WithId } from './IStore';
-import { IPartitionStore, Partition } from './IPartitionStore';
+import { DataId, WithId } from './IStore';
+import { Partition } from './IPartitionStore';
 import { ILockablePartitionStore } from './ILockablePartitionStore';
 import { TicketId } from './LockableStore';
+import { ConnectedPartitionStore } from './ConnectedPartitionStore';
 
-export class LockablePartitionStore extends TicketLock implements ILockablePartitionStore {
-  private readonly store: IPartitionStore;
-
-  /**
-   * A wrapper that enforces locking of a partition store. It returns a ticket once a lock has been
-   * successfully acquired. The ticket can then be used for accessing the methods of the store.
-   * Finally the ticket can be returned in order to release the lock.
-   *
-   * @param logger A logger for output
-   * @param store The partition store that is locked before access/operations.
-   */
-  constructor(logger: ILogger, lock: Lock, tickets: IStore, store: IPartitionStore) {
-    super(logger, lock, tickets);
-    this.store = store;
-  }
-
-  async connect(ticketId: TicketId) {
-    const ticket = await this.checkTicket(['WRITE'], ticketId);
-    this.logger.debug(`Connecting to Store using lock[ticketId: ${ticket.id}]...`);
-    return this.store.connect();
-  }
-
-  async disconnect(ticketId: TicketId) {
-    const ticket = await this.checkTicket(['WRITE'], ticketId);
-    this.logger.debug(`Disconnecting from Store using lock[ticketId: ${ticket.id}]...`);
-    return this.store.disconnect();
-  }
-
+export class LockablePartitionStore extends ConnectedPartitionStore
+  implements ILockablePartitionStore {
   async createWithoutId<T>(ticketId: TicketId, partition: Partition, data: T): Promise<WithId<T>> {
     const ticket = await this.checkTicket(['WRITE'], ticketId);
     this.logger.debug(`Forwarding createWithoutId(...) using lock[ticketId: ${ticket.id}]...`);

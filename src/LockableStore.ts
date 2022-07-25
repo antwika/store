@@ -1,7 +1,6 @@
-import { ILogger } from '@antwika/common';
-import { TicketLock, Lock } from '@antwika/lock';
-import { DataId, IStore, WithId } from './IStore';
+import { DataId, WithId } from './IStore';
 import { ILockableStore } from './ILockableStore';
+import { ConnectedStore } from './ConnectedStore';
 
 export type TicketId = string;
 
@@ -11,34 +10,7 @@ export type Ticket = {
   type: TicketType,
 };
 
-export class LockableStore extends TicketLock implements ILockableStore {
-  private readonly store: IStore;
-
-  /**
-   * A wrapper that enforces locking of a store. It returns a ticket once a lock has been
-   * successfully acquired. The ticket can then be used for accessing the methods of the store.
-   * Finally the ticket can be returned in order to release the lock.
-   *
-   * @param logger A logger for output
-   * @param store The store that is locked before access/operations.
-   */
-  constructor(logger: ILogger, lock: Lock, tickets: IStore, store: IStore) {
-    super(logger, lock, tickets);
-    this.store = store;
-  }
-
-  async connect(ticketId: TicketId) {
-    const ticket = await this.checkTicket(['WRITE'], ticketId);
-    this.logger.debug(`Connecting to Store using lock[ticketId: ${ticket.id}]...`);
-    return this.store.connect();
-  }
-
-  async disconnect(ticketId: TicketId) {
-    const ticket = await this.checkTicket(['WRITE'], ticketId);
-    this.logger.debug(`Disconnecting from Store using lock[ticketId: ${ticket.id}]...`);
-    return this.store.disconnect();
-  }
-
+export class LockableStore extends ConnectedStore implements ILockableStore {
   async createWithoutId<T>(ticketId: TicketId, data: T): Promise<WithId<T>> {
     const ticket = await this.checkTicket(['WRITE'], ticketId);
     this.logger.debug(`Forwarding createWithoutId(...) using lock[ticketId: ${ticket.id}]...`);
