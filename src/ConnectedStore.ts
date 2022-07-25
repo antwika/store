@@ -2,8 +2,13 @@ import { ILogger } from '@antwika/common';
 import { Lock, TicketId, TicketLock } from '@antwika/lock';
 import { IStore } from './IStore';
 
-export class ConnectedStore extends TicketLock {
-  protected readonly store: IStore;
+type AnyConnectableStore = {
+  connect: () => void,
+  disconnect: () => void,
+}
+
+export class ConnectedStore<Store extends AnyConnectableStore> extends TicketLock {
+  protected readonly store: Store;
 
   /**
    * A wrapper that enforces locking of a store. It returns a ticket once a lock has been
@@ -13,7 +18,7 @@ export class ConnectedStore extends TicketLock {
    * @param logger A logger for output
    * @param store The store that is locked before access/operations.
    */
-  constructor(logger: ILogger, lock: Lock, tickets: IStore, store: IStore) {
+  constructor(logger: ILogger, lock: Lock, tickets: IStore, store: Store) {
     super(logger, lock, tickets);
     this.store = store;
   }

@@ -1,10 +1,10 @@
 import { DataId, WithId } from './IStore';
-import { Partition } from './IPartitionStore';
+import { IPartitionStore, Partition } from './IPartitionStore';
 import { ILockablePartitionStore } from './ILockablePartitionStore';
 import { TicketId } from './LockableStore';
-import { ConnectedPartitionStore } from './ConnectedPartitionStore';
+import { ConnectedStore } from './ConnectedStore';
 
-export class LockablePartitionStore extends ConnectedPartitionStore
+export class LockablePartitionStore extends ConnectedStore<IPartitionStore>
   implements ILockablePartitionStore {
   async createWithoutId<T>(ticketId: TicketId, partition: Partition, data: T): Promise<WithId<T>> {
     const ticket = await this.checkTicket(['WRITE'], ticketId);

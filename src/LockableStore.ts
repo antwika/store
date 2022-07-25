@@ -1,4 +1,4 @@
-import { DataId, WithId } from './IStore';
+import { DataId, IStore, WithId } from './IStore';
 import { ILockableStore } from './ILockableStore';
 import { ConnectedStore } from './ConnectedStore';
 
@@ -10,7 +10,7 @@ export type Ticket = {
   type: TicketType,
 };
 
-export class LockableStore extends ConnectedStore implements ILockableStore {
+export class LockableStore extends ConnectedStore<IStore> implements ILockableStore {
   async createWithoutId<T>(ticketId: TicketId, data: T): Promise<WithId<T>> {
     const ticket = await this.checkTicket(['WRITE'], ticketId);
     this.logger.debug(`Forwarding createWithoutId(...) using lock[ticketId: ${ticket.id}]...`);
