@@ -1,17 +1,11 @@
 import { ILogger } from '@antwika/common';
-import { Lock } from '@antwika/lock';
+import { Lock, TicketLock } from '@antwika/lock';
 import { DataId, IStore, WithId } from './IStore';
 import { IPartitionStore, Partition } from './IPartitionStore';
 import { ILockablePartitionStore } from './ILockablePartitionStore';
-import { Ticket, TicketId, TicketType } from './LockableStore';
+import { TicketId } from './LockableStore';
 
-export class LockablePartitionStore implements ILockablePartitionStore {
-  private readonly logger: ILogger;
-
-  private readonly lock: Lock;
-
-  private readonly tickets: IStore;
-
+export class LockablePartitionStore extends TicketLock implements ILockablePartitionStore {
   private readonly store: IPartitionStore;
 
   /**
@@ -23,42 +17,8 @@ export class LockablePartitionStore implements ILockablePartitionStore {
    * @param store The partition store that is locked before access/operations.
    */
   constructor(logger: ILogger, lock: Lock, tickets: IStore, store: IPartitionStore) {
-    this.logger = logger;
-    this.lock = lock;
-    this.tickets = tickets;
+    super(logger, lock, tickets);
     this.store = store;
-  }
-
-  /**
-   * Acquire a lock for the partition store.
-   *
-   * @returns A ticket to be used for accessing the partition store.
-   */
-  async acquireTicket(ticketType: TicketType) {
-    switch (ticketType) {
-      case 'READ': await this.lock.beginRead(); break;
-      case 'WRITE': await this.lock.beginWrite(); break;
-      default: throw new Error('Invalid ticket type provided.');
-    }
-
-    const { id } = await this.tickets.createWithoutId<Ticket>({ type: ticketType });
-    this.logger.debug(`Acquired lock[ticketId: ${id}]!`);
-
-    return id;
-  }
-
-  /**
-   * Releases the partition store lock.
-   */
-  async returnTicket(ticketId: TicketId): Promise<void> {
-    const ticket = await this.checkTicket(['READ', 'WRITE'], ticketId);
-    this.logger.debug(`Awaiting release of lock[ticketId: ${ticket.id}]...`);
-
-    if (ticket.type === 'READ') await this.lock.endRead();
-    if (ticket.type === 'WRITE') await this.lock.endWrite();
-
-    await this.tickets.delete(ticket.id);
-    this.logger.debug(`Released lock[ticketId: ${ticket.id}]!`);
   }
 
   async connect(ticketId: TicketId) {
@@ -101,16 +61,5 @@ export class LockablePartitionStore implements ILockablePartitionStore {
     const ticket = await this.checkTicket(['WRITE'], ticketId);
     this.logger.debug(`Forwarding delete(...) using lock[ticketId: ${ticket.id}]...`);
     this.store.delete(partition, id);
-  }
-
-  private async checkTicket(ticketTypes: TicketType[], ticketId: TicketId) {
-    try {
-      const ticket = await this.tickets.read<Ticket>(ticketId);
-      if (!ticketTypes.includes(ticket.type)) throw new Error('Invalid ticket type');
-      return ticket;
-    } catch (err) {
-      this.logger.warning('Attempted to use an invalid ticket with store!');
-      throw new Error('Invalid ticket');
-    }
   }
 }

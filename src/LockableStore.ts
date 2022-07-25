@@ -27,20 +27,6 @@ export class LockableStore extends TicketLock implements ILockableStore {
     this.store = store;
   }
 
-  /**
-   * Releases the store lock.
-   */
-  async returnTicket(ticketId: TicketId): Promise<void> {
-    const ticket = await this.checkTicket(['READ', 'WRITE'], ticketId);
-    this.logger.debug(`Awaiting release of lock[ticketId: ${ticket.id}]...`);
-
-    if (ticket.type === 'READ') await this.lock.endRead();
-    if (ticket.type === 'WRITE') await this.lock.endWrite();
-
-    await this.tickets.delete(ticket.id);
-    this.logger.debug(`Released lock[ticketId: ${ticket.id}]!`);
-  }
-
   async connect(ticketId: TicketId) {
     const ticket = await this.checkTicket(['WRITE'], ticketId);
     this.logger.debug(`Connecting to Store using lock[ticketId: ${ticket.id}]...`);
