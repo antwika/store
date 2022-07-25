@@ -1,5 +1,5 @@
 import { ILogger } from '@antwika/common';
-import { Lock } from '@antwika/lock';
+import { TicketLock, Lock } from '@antwika/lock';
 import { DataId, IStore, WithId } from './IStore';
 import { ILockableStore } from './ILockableStore';
 
@@ -11,13 +11,7 @@ export type Ticket = {
   type: TicketType,
 };
 
-export class LockableStore implements ILockableStore {
-  private readonly logger: ILogger;
-
-  private readonly lock: Lock;
-
-  private readonly tickets: IStore;
-
+export class LockableStore extends TicketLock implements ILockableStore {
   private readonly store: IStore;
 
   /**
@@ -29,28 +23,8 @@ export class LockableStore implements ILockableStore {
    * @param store The store that is locked before access/operations.
    */
   constructor(logger: ILogger, lock: Lock, tickets: IStore, store: IStore) {
-    this.logger = logger;
-    this.lock = lock;
-    this.tickets = tickets;
+    super(logger, lock, tickets);
     this.store = store;
-  }
-
-  /**
-   * Acquire a lock for the store.
-   *
-   * @returns A ticket to be used for accessing the store.
-   */
-  async acquireTicket(ticketType: TicketType) {
-    switch (ticketType) {
-      case 'READ': await this.lock.beginRead(); break;
-      case 'WRITE': await this.lock.beginWrite(); break;
-      default: throw new Error('Invalid ticket type provided.');
-    }
-
-    const { id } = await this.tickets.createWithoutId<Ticket>({ type: ticketType });
-    this.logger.debug(`Acquired lock[ticketId: ${id}]!`);
-
-    return id;
   }
 
   /**
@@ -107,16 +81,5 @@ export class LockableStore implements ILockableStore {
     const ticket = await this.checkTicket(['WRITE'], ticketId);
     this.logger.debug(`Forwarding delete(...) using lock[ticketId: ${ticket.id}]...`);
     this.store.delete(id);
-  }
-
-  private async checkTicket(ticketTypes: TicketType[], ticketId: TicketId) {
-    try {
-      const ticket = await this.tickets.read<Ticket>(ticketId);
-      if (!ticketTypes.includes(ticket.type)) throw new Error('Invalid ticket type');
-      return ticket;
-    } catch (err) {
-      this.logger.warning('Attempted to use an invalid ticket with store!');
-      throw new Error('Invalid ticket');
-    }
   }
 }
