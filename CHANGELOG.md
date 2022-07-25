@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.1](https://github.com/antwika/store/compare/v0.4.0...v0.4.1) (2022-07-25)
+
+
+### Features
+
+* **deps:** use @antwika/lock module ([0c4628d](https://github.com/antwika/store/commit/0c4628d358da1f9cd51260c8fe563cbadcbbe9c6))
+* leverage TicketLock for keeping track of locks/tickets ([2f3e23e](https://github.com/antwika/store/commit/2f3e23ef3ed15c3b8980c3e51a30f9c85843a783))
+* LockablePartitionStore ([f9a1af3](https://github.com/antwika/store/commit/f9a1af3e1d549b0fb4e61be4dcad78e4d36eb5e2))
+* LockableStore ([53e0520](https://github.com/antwika/store/commit/53e05201986dfb701a370c116625802b95e85be0))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @antwika/common to v0.0.19 ([92388ed](https://github.com/antwika/store/commit/92388ed457c167e6d5f0b4afc22fc0d01946a358))
+* remove duplication ([13c0cd5](https://github.com/antwika/store/commit/13c0cd563b83b36671cf1da072327893d401316c))
+
 ## [0.4.0](https://github.com/antwika/store/compare/v0.3.1...v0.4.0) (2022-07-19)
 
 
