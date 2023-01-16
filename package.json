@@ -43,7 +43,7 @@
     "typescript": "4.9.4"
   },
   "dependencies": {
-    "@antwika/common": "0.0.43",
+    "@antwika/common": "0.0.44",
     "@antwika/lock": "^0.0.31",
     "mongodb": "^4.6.0",
     "mongodb-memory-server": "^8.6.0"
