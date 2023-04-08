@@ -36,10 +36,10 @@
     mongodb-memory-server "^8.6.0"
     uuid "^9.0.0"
 
-"@antwika/standard-version@0.1.41":
-  version "0.1.41"
-  resolved "https://registry.yarnpkg.com/@antwika/standard-version/-/standard-version-0.1.41.tgz#2bd2636e5a9a999656c5a3adfb36e77816528be9"
-  integrity sha512-uXkUoU3ydc24ggN+YkxYZGr0poP6ZMkwlOc0V48YRHodAp4ZT0YuCfixE0LtYHT0fIBdEsFVL5K2G0L5qlIfXQ==
+"@antwika/standard-version@0.1.42":
+  version "0.1.42"
+  resolved "https://registry.yarnpkg.com/@antwika/standard-version/-/standard-version-0.1.42.tgz#56288cd9a2df384ac5c4351e4ff7f04ab954561d"
+  integrity sha512-7vF+K4CNeljc69L0RjKcbw0WYuOlb7h4pckj3HIRjqUGkEggM3XJBg5xnrlBQ8ItxZ2cRRri9ACWGkSUM9JdMg==
   dependencies:
     conventional-changelog "3.1.25"
     conventional-changelog-config-spec "2.1.0"
