@@ -20,6 +20,11 @@
   resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.56.tgz#91d5471c0fdaac8a43ead41d7c10f3a88e372eac"
   integrity sha512-PxMOlpOGQEWFP8xUZrvvAdLfVLxNHIpSiziL23GXHLDyadIea6e1AdNEyai1Fhd3Ua/+UezYPYEGlixEZST2eQ==
 
+"@antwika/common@0.0.57":
+  version "0.0.57"
+  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.57.tgz#27b304d890a00ec8ad7fa857af5b1e6346712e9b"
+  integrity sha512-KjJiwugGEVw2czN7/hdJBxZ6NRMHcVCJU7e/YcaXZfUN5eIKIYRGKQcnOyOYck1EQi3Zi+3LZy23PULi6xF6hw==
+
 "@antwika/lock@^0.0.44":
   version "0.0.44"
   resolved "https://registry.yarnpkg.com/@antwika/lock/-/lock-0.0.44.tgz#54af908dd376ebc7c404b548e02f6546e50457d1"
