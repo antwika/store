@@ -20,22 +20,17 @@
   resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.18.tgz#ece6525d6fabf4b1dde9955ff905a926b232771f"
   integrity sha512-dXD9KuX/ho1VfG4HWMWKqF0R+DuPJRpzOCyXYzP463Po9F8l0+nNCzooM9O5g6tUyrO7ygq1BnM+kjp9Tm2D6w==
 
-"@antwika/common@0.0.74":
-  version "0.0.74"
-  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.74.tgz#0fadb6220f9a6d547d4c6f1c8b15c6e1e5e7a57d"
-  integrity sha512-C8CyyDkjMQka4kPck8kzOuBYSDJxtuz1SAw0ulbAA9jusCGkmFp5hM9/CYW3kfTMVr+wYPEUdS7i5Z46VpwZ1A==
-
 "@antwika/common@0.0.75":
   version "0.0.75"
   resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.75.tgz#a3a2f9d3bbb706708f56b2b7b539171d499c03ce"
   integrity sha512-3+UpUCtO6GiiDoYFLL+c30+MeYeOkdXQXmv8dwobm8Jsyiy6MpOpf3U2w5UxsBb3ULL56O8INMds0QgsTIQivg==
 
-"@antwika/lock@^0.0.62":
-  version "0.0.62"
-  resolved "https://registry.yarnpkg.com/@antwika/lock/-/lock-0.0.62.tgz#c8851fcdd49b70dd4bd18c48bc21818f24f8740e"
-  integrity sha512-vC3GlMkOgnKwEZc0kJrss3R6qxFvmvAYYX/dHMowHXQDWf4UtPKp8tvkfI/5n3q16/7OQT7vFrfLtspsznavdA==
+"@antwika/lock@^0.0.63":
+  version "0.0.63"
+  resolved "https://registry.yarnpkg.com/@antwika/lock/-/lock-0.0.63.tgz#c24581a7158296fecc958c7f1c112fabf1542b9c"
+  integrity sha512-6q4Ck8mj/EV330mb9kzdGLSX2q9rK/RJTVoQxXlGhR3CvNWPf+AOBan+idrNmPVUgIbfvm0jsPpKKRmEt7nN+w==
   dependencies:
-    "@antwika/common" "0.0.74"
+    "@antwika/common" "0.0.75"
     "@antwika/store" "^0.4.0"
     mongodb "^5.0.0"
     mongodb-memory-server "^8.6.0"
