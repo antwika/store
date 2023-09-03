@@ -20,24 +20,19 @@
   resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.18.tgz#ece6525d6fabf4b1dde9955ff905a926b232771f"
   integrity sha512-dXD9KuX/ho1VfG4HWMWKqF0R+DuPJRpzOCyXYzP463Po9F8l0+nNCzooM9O5g6tUyrO7ygq1BnM+kjp9Tm2D6w==
 
-"@antwika/common@0.0.75":
-  version "0.0.75"
-  resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.75.tgz#a3a2f9d3bbb706708f56b2b7b539171d499c03ce"
-  integrity sha512-3+UpUCtO6GiiDoYFLL+c30+MeYeOkdXQXmv8dwobm8Jsyiy6MpOpf3U2w5UxsBb3ULL56O8INMds0QgsTIQivg==
-
 "@antwika/common@0.0.76":
   version "0.0.76"
   resolved "https://registry.yarnpkg.com/@antwika/common/-/common-0.0.76.tgz#ba6d866838bf05e2ff673c1678239fed37b4f380"
   integrity sha512-1j9/qLpc9RwohhvTrEgSnzJ6LeXdzXpIi+PI1t9OBfYv/S74KCMn2igJtw4dJ4LioZUXLLPVoUbzJ+dBunyBjQ==
 
-"@antwika/lock@^0.0.63":
-  version "0.0.63"
-  resolved "https://registry.yarnpkg.com/@antwika/lock/-/lock-0.0.63.tgz#c24581a7158296fecc958c7f1c112fabf1542b9c"
-  integrity sha512-6q4Ck8mj/EV330mb9kzdGLSX2q9rK/RJTVoQxXlGhR3CvNWPf+AOBan+idrNmPVUgIbfvm0jsPpKKRmEt7nN+w==
+"@antwika/lock@^0.0.64":
+  version "0.0.64"
+  resolved "https://registry.yarnpkg.com/@antwika/lock/-/lock-0.0.64.tgz#35a140d9cae8419cc6caef90256afa6318e74fd0"
+  integrity sha512-0Gs9LWHRhuCn85zcjBFdtCwKyMsbnshujEDI8Gz1CM4CSJqFbW4uPotFoyUePbtGL70FuZKEMZwyoxNm8IRPFg==
   dependencies:
-    "@antwika/common" "0.0.75"
+    "@antwika/common" "0.0.76"
     "@antwika/store" "^0.4.0"
-    mongodb "^5.0.0"
+    mongodb "^6.0.0"
     mongodb-memory-server "^8.6.0"
     uuid "^9.0.0"
 
@@ -1681,11 +1676,6 @@ bson@^4.6.3:
   dependencies:
     buffer "^5.6.0"
 
-bson@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/bson/-/bson-5.4.0.tgz#0eea77276d490953ad8616b483298dbff07384c6"
-  integrity sha512-WRZ5SQI5GfUuKnPTNmAYPiKIof3ORXAF4IRU5UcgmivNIon01rWQlw5RUH954dpu8yGL8T59YShVddIPaU/gFA==
-
 bson@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/bson/-/bson-6.0.0.tgz#685f631a2ce255e2ed3987a7355210e4beace17e"
@@ -3321,11 +3311,6 @@ ip@^1.1.5:
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.8.tgz#ae05948f6b075435ed3307acce04629da8cdbf48"
   integrity sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==
 
-ip@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ip/-/ip-2.0.0.tgz#4cf4ab182fee2314c75ede1276f8c80b479936da"
-  integrity sha512-WKa+XuLG1A1R0UWhl2+1XQSi+fZWMsYKffMZTTYsiZaUD8k2yDAj5atimTUD2TZkyCkNEeYE5NhFZmupOGtjYQ==
-
 is-array-buffer@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/is-array-buffer/-/is-array-buffer-3.0.1.tgz#deb1db4fcae48308d54ef2442706c0393997052a"
@@ -4429,17 +4414,6 @@ mongodb@^4.5.0, mongodb@^4.6.0:
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongodb@^5.0.0:
-  version "5.8.1"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-5.8.1.tgz#dc201adfbd6c6d73401cdcf12ebdb75f14771faf"
-  integrity sha512-wKyh4kZvm6NrCPH8AxyzXm3JBoEf4Xulo0aUWh3hCgwgYJxyQ1KLST86ZZaSWdj6/kxYUA3+YZuyADCE61CMSg==
-  dependencies:
-    bson "^5.4.0"
-    mongodb-connection-string-url "^2.6.0"
-    socks "^2.7.1"
-  optionalDependencies:
-    "@mongodb-js/saslprep" "^1.1.0"
-
 mongodb@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-6.0.0.tgz#a01f989d0c1ceb7b08068551c545e6131557a1e8"
@@ -5296,14 +5270,6 @@ socks@^2.6.2:
   integrity sha512-zDZhHhZRY9PxRruRMR7kMhnf3I8hDs4S3f9RecfnGxvcBHQcKcIH/oUcEWffsfl1XxdYlA7nnlGbbTvPz9D8gA==
   dependencies:
     ip "^1.1.5"
-    smart-buffer "^4.2.0"
-
-socks@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/socks/-/socks-2.7.1.tgz#d8e651247178fde79c0663043e07240196857d55"
-  integrity sha512-7maUZy1N7uo6+WVEX6psASxtNlKaNVMlGQKkG/63nEDdLOWNbiUMoLK7X4uYoLhQstau72mLgfEWcXcwsaHbYQ==
-  dependencies:
-    ip "^2.0.0"
     smart-buffer "^4.2.0"
 
 source-map-support@0.5.13:
