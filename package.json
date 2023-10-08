@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@antwika/common": "0.0.81",
-    "@antwika/lock": "^0.0.68",
+    "@antwika/lock": "^0.0.69",
     "mongodb": "^6.0.0",
     "mongodb-memory-server": "^8.6.0"
   },
