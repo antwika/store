@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "name": "@antwika/store",
-  "version": "0.4.93",
+  "version": "0.4.94",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
