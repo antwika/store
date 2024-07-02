@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.103](https://github.com/antwika/store/compare/v0.4.102...v0.4.103) (2024-07-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency mongodb to v6.8.0 ([4c93efc](https://github.com/antwika/store/commit/4c93efc0453ff97bf4885e6f3c0b070c4b351cae))
+
 ## [0.4.102](https://github.com/antwika/store/compare/v0.4.101...v0.4.102) (2024-06-25)
 
 ## [0.4.101](https://github.com/antwika/store/compare/v0.4.100...v0.4.101) (2024-06-18)
